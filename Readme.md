@@ -23,6 +23,22 @@ cd btc_testnet4
 docker-compose up -d
 #you can also run `docker-compose up` to run the container in the foreground, so you can see the debug.log
 ```
+Tips: 
+1. docker-compose version need to be upgrade to 20.x if using ubuntu 24.04
+   - Uninstall the old docker-compose version:
+     ```bash
+       sudo apt-get remove docker-compose
+     ```
+   - Install the latest Docker Compose (v2.x):
+     ```bash
+      sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      sudo chmod +x /usr/local/bin/docker-compose
+
+     ```
+   - Verify the installation:
+     ```bash
+        docker-compose --version
+     ```
 
 ## How to connect to the container, create a new wallet and a new address
 
