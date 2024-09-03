@@ -24,7 +24,7 @@ docker-compose up -d
 #you can also run `docker-compose up` to run the container in the foreground, so you can see the debug.log
 ```
 Tips: 
-1. docker-compose version need to be upgrade to 20.x if using ubuntu 24.04
+1. To use Ubuntu 24.04, `docker-compose` version needs to be upgraded to 20.x or higher.
    - Uninstall the old docker-compose version:
      ```bash
      sudo apt-get remove docker-compose
