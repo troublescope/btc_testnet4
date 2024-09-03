@@ -27,7 +27,7 @@ Tips:
 1. docker-compose version need to be upgrade to 20.x if using ubuntu 24.04
    - Uninstall the old docker-compose version:
      ```bash
-       sudo apt-get remove docker-compose
+     sudo apt-get remove docker-compose
      ```
    - Install the latest Docker Compose (v2.x):
      ```bash
@@ -37,7 +37,7 @@ Tips:
      ```
    - Verify the installation:
      ```bash
-        docker-compose --version
+     docker-compose --version
      ```
 
 ## How to connect to the container, create a new wallet and a new address
