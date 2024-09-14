@@ -1,0 +1,24 @@
+# Base image
+FROM ubuntu:20.04
+
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    tar \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone the rbo_indexer_testnet repository
+RUN git clone https://github.com/rainbowprotocol-xyz/rbo_indexer_testnet.git /app/rbo_indexer_testnet
+
+# Download and extract rbo_worker
+RUN wget https://storage.googleapis.com/rbo/rbo_worker/rbo_worker-linux-amd64-0.0.2-20240914-4ec80a8.tar.gz && \
+    tar -xzvf rbo_worker-linux-amd64-0.0.2-20240914-4ec80a8.tar.gz && \
+    cp rbo_worker-linux-amd64-0.0.2-20240914-4ec80a8/rbo_worker /app/rbo_indexer_testnet/rbo_worker && \
+    chmod +x /app/rbo_indexer_testnet/rbo_worker
+
+# Set working directory
+WORKDIR /app/rbo_indexer_testnet
+
+# Set the executable entrypoint
+ENTRYPOINT ["./rbo_worker"]
