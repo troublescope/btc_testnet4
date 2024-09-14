@@ -1,13 +1,41 @@
-version: '3'
+# Version is Deprecated in latest version docker-compose
+#version: '3.8'
+
 services:
   bitcoind:
     image: mocacinno/btc_testnet4:bci_node
     privileged: true
     container_name: bitcoind
     volumes:
-      - /root/project/run_btc_testnet4/data:/root/.bitcoin/
-    command: ["bitcoind", "-testnet4", "-server","-txindex", "-rpcuser=demo", "-rpcpassword=demo", "-rpcallowip=0.0.0.0/0", "-rpcbind=0.0.0.0:5000"]
+      - ../data:/root/.bitcoin/
+    command:
+      - "bitcoind"
+      - "-testnet4"
+      - "-server"
+      - "-txindex"
+      - "-rpcuser=${RPCUSER}"
+      - "-rpcpassword=${RPCPASSWORD}"
+      - "-rpcallowip=0.0.0.0/0"
+      - "-rpcbind=0.0.0.0:5000"
     ports:
       - "8333:8333"
       - "48332:48332"
       - "5000:5000"
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+          cpus: '0.5'
+        reservations:
+          memory: 1024M
+
+  rbo_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.rbo_worker
+    container_name: rbo_worker
+    volumes:
+      - ../data/rbo_worker:/app/rbo_worker
+    depends_on:
+      - bitcoind
+    command: ["./rbo_worker", "worker", "--rpc", "http://bitcoind:5000", "--password", "${RPCPASSWORD}", "--username", "${RPCUSER}", "--start_height", "42000"]
